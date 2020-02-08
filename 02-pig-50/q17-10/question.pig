@@ -27,3 +27,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+selected = FOREACH u GENERATE firstname, color; 
+filtered1 = filter selected by (color == 'blue' OR color == 'black');
+
+STORE filtered1 INTO 'output' USING PigStorage(',');
+fs -copyToLocal output output

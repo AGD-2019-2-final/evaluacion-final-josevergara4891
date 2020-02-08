@@ -26,3 +26,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+
+w = FOREACH u GENERATE SUBSTRING(birthday,5,7);
+
+STORE w INTO 'output';
+fs -copyToLocal output output

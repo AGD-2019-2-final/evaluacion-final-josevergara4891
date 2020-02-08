@@ -28,3 +28,10 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+
+modified = FOREACH u GENERATE color; 
+selected = filter modified by ($0 matches '(?i)^[b].*');
+
+STORE selected INTO 'output' USING PigStorage(',');
+
+fs -copyToLocal output output

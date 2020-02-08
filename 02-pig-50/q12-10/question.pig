@@ -32,4 +32,9 @@ u = LOAD 'data.csv' USING PigStorage(',')
         quantity:INT);
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
---
+modified = FOREACH u GENERATE surname; 
+selected = filter modified by ($0 matches '(?i)^[d-k].*');
+
+STORE selected INTO 'output' USING PigStorage(',');
+
+fs -copyToLocal output output
